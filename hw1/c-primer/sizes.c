@@ -70,8 +70,9 @@ int main() {
   // Array declaration. Use your macro to print the size of this.
   int x[5];
   PRINT_SIZE(x);
-  int (*px)[5];
-  PRINT_SIZE(px);
+  //int (*px)[5];
+  //PRINT_SIZE(px);
+  PRINT_SIZE(&x);
 
   // You can just use your macro here instead: PRINT_SIZE("student", you);
   // printf("size of %s : %zu bytes \n", "student", sizeof(you));
