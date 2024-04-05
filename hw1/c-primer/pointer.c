@@ -48,6 +48,7 @@ int main(int argc, char * argv[]) {  // What is the type of argv?
 
   // Access array elements through pointers with pointer arithmetic
   printf("c[0] = %c\n", *pc);
+  printf("c[1] = %c\n", *(c + 1));
   printf("c[1] = %c\n", *(pc + 1));
   printf("c[2] = %c\n", *(pc + 2));
   printf("c[3] = %c\n", *(pc + 3));
@@ -83,6 +84,8 @@ int main(int argc, char * argv[]) {  // What is the type of argv?
   const char * pcc = c;  // pcc is a pointer to char constant
   char const * pcc2 = c;  // What is the type of pcc2? pointer to a const char. const can be on either side of a type, so same as above.
   printf("*pcc = %s\n", pcc); 
+  char * pc3 = c; // Valid assignment: c acts like a pointer to c[0] here. i.e. &c[0]
+  printf("pc3 = %s\n", pc3); // If you use %s, will print until null character (\0). Don't need to dereference.
 
   // For each of the following, why is the assignment:
   //*pcc = '7';  // invalid? Can't change const values (read-only)
@@ -96,6 +99,8 @@ int main(int argc, char * argv[]) {  // What is the type of argv?
   //cp = *pcp;  // invalid? // Can't change the pointer. It is read-only
   //cp = *argv;  // invalid? // Can't change the pointer. It is read-only
   *cp = '!';  // valid? // Can change the character (after it is dereferenced). The first element's address is dereferenced.
+  printf("cp = %s\n", cp); 
+  *(cp + 1) = '?'; // Assign value to second element by dereferencing the address of the second element
   printf("cp = %s\n", cp); 
 
   const char * const cpc = c;  // cpc is a const pointer to char const
