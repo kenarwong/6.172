@@ -50,7 +50,9 @@ int main(int argc, char** argv) {
   matrix* B;
   matrix* C;
 
+  //const int kMatrixSize = 1;
   const int kMatrixSize = 4;
+  //const int kMatrixSize = 4096;
 
 
   // Parse command line arguments
@@ -72,27 +74,35 @@ int main(int argc, char** argv) {
   }
 
   // This is a trick to make the memory bug leads to a wrong output.
-  int size = sizeof(int) * 4;
-  int* temp[20];
+  int size = sizeof(int) * 4; // 4 bytes * 4 = 16 bytes, 4 integers
+  int* temp[20]; // 20 pointers to integers
 
   for (int i = 0; i < 20; i++) {
-    temp[i] = (int*)malloc(size);
-    memset(temp[i], 1, size);
+    temp[i] = (int*)malloc(size); // Allocating 16 bytes for each pointer, and assigning the pointer to the array of type "int"
+    memset(temp[i], 1, size); // // Filling the first 16 bytes of the allocated memory with 1 byte values a.k.a. 16 "x01". Because the array is divided into type "int", this equals to 4 int's with a value of hexadecimal representation of "0x01010101"
   }
   int total = 0;
   for (int i = 0; i < 20; i++) {
     for (int j = 0; j < 4; j++) {
-      total += temp[i][j];
+      total += temp[i][j]; // Accessing the jth int (4 bytes), which should be 4 bytes assigned to a value of 0x01010101, then adding it to the total
     }
   }
+
+  // 0x01010101 = 16843009
+  // total should be 20*4*0x01010101 = 20*4*16843009 = 1347440720
+  // But, if a memory bug occurs, the total will be different
+  printf("Expected: %d\n",1347440720);
+  printf("Actual: %d\n",total);
+
+  // If total is used, then the compiler will not optimize out the mallocs
   if (!total) printf("Trick to stop mallocs from being optimized out.");
   for (int i = 0; i < 20; i++) {
-    free(temp[i]);
+    free(temp[i]); // Manually free
   }
 
   fprintf(stderr, "Setup\n");
 
-//   A = make_matrix(kMatrixSize, kMatrixSize+1);
+  //A = make_matrix(kMatrixSize, kMatrixSize+1);
   A = make_matrix(kMatrixSize, kMatrixSize);
   B = make_matrix(kMatrixSize, kMatrixSize);
   C = make_matrix(kMatrixSize, kMatrixSize);
@@ -118,6 +128,13 @@ int main(int argc, char** argv) {
       for (int j = 0; j < B->cols; j++) {
         B->values[i][j] = rand_r(&randomSeed) % 10;
       }
+    }
+  }
+  
+  // Zero out C
+  for (int i = 0; i < C->rows; i++) {
+    for (int j = 0; j < C->cols; j++) {
+      C->values[i][j] = 0;
     }
   }
 
@@ -150,6 +167,10 @@ int main(int argc, char** argv) {
     double elapsed = tdiff(time1, time2);
     printf("Elapsed execution time: %f sec\n", elapsed);
   }
+
+  free_matrix(A);
+  free_matrix(B);
+  free_matrix(C);
 
   return 0;
 }

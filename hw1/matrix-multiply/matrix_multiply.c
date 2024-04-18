@@ -32,20 +32,27 @@
 #include <math.h>
 #include <string.h>
 
-// #include "./tbassert.h"
+#include "./tbassert.h"
 
 // Allocates a row-by-cols matrix and returns it
 matrix* make_matrix(int rows, int cols) {
-  matrix* new_matrix = malloc(sizeof(matrix));
+  matrix* new_matrix = malloc(sizeof(matrix)); // Leak 32 bytes in 2 objects
+  // 4 bytes for rows, 4 bytes for cols, 8 bytes for values = 16 bytes
+  // 2 objects of 16 bytes = 32 bytes
 
   // Set the number of rows and columns
   new_matrix->rows = rows;
   new_matrix->cols = cols;
 
   // Allocate a buffer big enough to hold the matrix.
-  new_matrix->values = (int**)malloc(sizeof(int*) * rows);
+  new_matrix->values = (int**)malloc(sizeof(int*) * rows); // Leak 64 bytes in 2 objects
+  // 8 bytes for each pointer, 4 rows = 32 bytes
+  // 2 objects of 32 bytes = 64 bytes
   for (int i = 0; i < rows; i++) {
-    new_matrix->values[i] = (int*)malloc(sizeof(int) * cols);
+    new_matrix->values[i] = (int*)malloc(sizeof(int) * cols); // Leak 128 bytes in 8 objects
+    // 4 bytes for each int, 4 cols = 16 bytes
+    // 8 objects of 16 bytes = 128 bytes
+    // 8 objects, 4 iterations = 128 bytes
   }
 
   return new_matrix;
@@ -85,12 +92,29 @@ int matrix_multiply_run(const matrix* A, const matrix* B, matrix* C) {
   */
 
   for (int i = 0; i < A->rows; i++) {
-    for (int j = 0; j < B->cols; j++) {
-      for (int k = 0; k < A->cols; k++) {
-        C->values[i][j] += A->values[i][k] * B->values[k][j];
-      }
-    }
+   for (int j = 0; j < B->cols; j++) {
+     for (int k = 0; k < A->cols; k++) {
+       #ifdef DEBUG
+       printf("i: %d, j: %d, k: %d\n", i, j, k);
+       printf("A->values[i][k]: %d, B->values[k][j]: %d\n", A->values[i][k], B->values[k][j]);
+       printf("Before: C->values[i][j]: %d\n", C->values[i][j]);
+       #endif
+       C->values[i][j] += A->values[i][k] * B->values[k][j];
+       #ifdef DEBUG
+       printf("After: C->values[i][j]: %d\n", C->values[i][j]);
+       #endif
+     }
+   }
   }
+
+  // Change the order of the loops to improve cache performance
+  //for (int i = 0; i < A->rows; i++) {
+  //  for (int k = 0; k < A->cols; k++) {
+  //      for (int j = 0; j < B->cols; j++) {
+  //      C->values[i][j] += A->values[i][k] * B->values[k][j];
+  //    }
+  //  }
+  //}
 
   return 0;
 }
