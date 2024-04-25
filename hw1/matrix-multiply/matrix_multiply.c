@@ -95,13 +95,13 @@ int matrix_multiply_run(const matrix* A, const matrix* B, matrix* C) {
    for (int j = 0; j < B->cols; j++) {
      for (int k = 0; k < A->cols; k++) {
        #ifdef DEBUG
-       printf("i: %d, j: %d, k: %d\n", i, j, k);
-       printf("A->values[i][k]: %d, B->values[k][j]: %d\n", A->values[i][k], B->values[k][j]);
-       printf("Before: C->values[i][j]: %d\n", C->values[i][j]);
+       //printf("i: %d, j: %d, k: %d\n", i, j, k);
+       //printf("A->values[i][k]: %d, B->values[k][j]: %d\n", A->values[i][k], B->values[k][j]);
+       //printf("Before: C->values[i][j]: %d\n", C->values[i][j]);
        #endif
        C->values[i][j] += A->values[i][k] * B->values[k][j];
        #ifdef DEBUG
-       printf("After: C->values[i][j]: %d\n", C->values[i][j]);
+       //printf("After: C->values[i][j]: %d\n", C->values[i][j]);
        #endif
      }
    }
