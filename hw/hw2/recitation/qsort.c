@@ -19,11 +19,15 @@ int partition(data_t arr[], int l, int h) {
   int i = (l - 1);
 
   for (int j = l; j <= h - 1; j++) {
+    printf("i: %d, j: %d\n", i, j);
     if (arr[j] <= x) {
+      printf("arr[j]: %d <= x: %d\n", arr[j], x);
       i++;
+      printf("Swapping arr[i] %d and arr[j] %d\n", arr[i], arr[j]);
       swap(&arr[i], &arr[j]);
     }
   }
+  printf("Swapping arr[i + 1] %d and arr[j] %d\n", arr[i + 1], arr[h]);
   swap(&arr[i + 1], &arr[h]);
   return (i + 1);
 }
@@ -50,6 +54,7 @@ void quickSortIterative(data_t arr[], int l, int h) {
 
     // Set pivot element at its correct position
     // in sorted array
+    printf("Calling partition with arr, l: %d, h: %d\n", l, h);
     int p = partition(arr, l, h);
 
     // If there are elements on left side of pivot,

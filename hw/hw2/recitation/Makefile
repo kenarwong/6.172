@@ -1,4 +1,4 @@
-CC := clang
+CC := /opt/opencilk/bin/clang
 
 ifeq ($(DEBUG),1)
 	CFLAGS := -Wall -O0 -g

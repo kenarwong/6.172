@@ -45,18 +45,19 @@ int main(int argc, char* argv[]) {
 
   int i, j;
   for (j = 0; j < K ; j++) {
-    for (i = 0; i < N; i++) {
-      data[i] = rand_r(&seed);
-      //  printf("%d ", data[i]);
-    }
-    //  printf("\n");
+    //for (i = 0; i < N; i++) {
+    //  data[i] = rand_r(&seed);
+    //  printf("%d ", data[i]);
+    //}
+    //printf("\n");
+    data = (data_t[]) {4, 5, 2, 3, 4, 6, 2, 3, 4, 1};
 
-    isort(data, data + N - 1);
-    //quickSortIterative(data, 0, N);
-    /*for (i = 0; i < N; i++) {
+    //isort(data, data + N - 1);
+    quickSortIterative(data, 0, N);
+    for (i = 0; i < N; i++) {
       printf("%d ", data[i]);
     }
-    printf("\n");*/
+    printf("\n");
   }
   free(data);
   printf("Done!\n");
