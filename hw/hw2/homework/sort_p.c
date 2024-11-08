@@ -23,7 +23,99 @@
 
 #include "./util.h"
 
+// Function prototypes
+static void merge_p(data_t* A, int p, int q, int r);
+static void copy_p(data_t* source, data_t* dest, int n);
+
 void sort_p(data_t* A, int p, int r) {
-  printf("Unimplemented!\n");
+  assert(A);
+  if (p < r) {
+    int q = (p + r) / 2;
+    sort_p(A, p, q);
+    sort_p(A, q + 1, r);
+    merge_p(A, p, q, r);
+  }
 }
 
+// A merge routine. Merges the sub-arrays A [p..q] and A [q + 1..r].
+// Uses two arrays 'left' and 'right' in the merge operation.
+static inline void merge_p(data_t* A, int p, int q, int r) {
+  assert(A);
+  assert(p <= q);
+  assert((q + 1) <= r);
+  int n1 = q - p + 1;
+  int n2 = r - q;
+
+  // #ifdef DEBUG
+  // printf("p: %d, q: %d, r: %d, n1: %d, n2: %d\n", p, q, r, n1, n2);
+  // for (int iA = p; iA < r; iA++) {
+  //   if (iA == p || iA == q)
+  //       printf("|");
+  //   else
+  //   {
+  //       printf(" ");
+  //   }
+  //       
+  //   printf("%d", A[iA]);
+  // }
+  // printf("|\n");
+  // #endif
+
+  // Create two temporary arrays
+  data_t* left = 0, * right = 0;
+  mem_alloc(&left, n1 + 1);
+  mem_alloc(&right, n2 + 1);
+  if (left == NULL || right == NULL) {
+    mem_free(&left);
+    mem_free(&right);
+    return;
+  }
+
+  // Use pointer arithmetic, then type as pointer
+  copy_p(A+p, left, n1);
+  copy_p(A+q+1, right, n2);
+  left[n1] = UINT_MAX;
+  right[n2] = UINT_MAX;
+
+  // #ifdef DEBUG
+  // printf("Left: \n");
+  // for (int iL = 0; iL <= n1; iL++) {
+  //     printf("%u ", left[iL]);
+  // }
+  // printf("\n");
+
+  // printf("Right: \n");
+  // for (int iR = 0; iR <= n2; iR++) {
+  //     printf("%u ", right[iR]);
+  // }
+  // printf("\n");
+  // #endif
+
+  // Value comparison and reordering
+  int i = 0;
+  int j = 0;
+
+  // Use pointer arithmetic
+  for (int k = p; k <= r; k++) {
+    if (*(left+i) <= *(right+j)) {
+      *(A+k) = *(left+i);
+      i++;
+    } else {
+      *(A+k) = *(right+j);
+      j++;
+    }
+  }
+
+  mem_free(&left);
+  mem_free(&right);
+}
+
+static inline void copy_p(data_t* source, data_t* dest, int n) {
+  assert(dest);
+  assert(source);
+
+  // Use pointer arithmetic
+  for (int i = 0 ; i < n ; i++) {
+    *(dest+i) = *(source+i);
+  }
+}

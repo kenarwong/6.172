@@ -27,7 +27,7 @@ int partition(data_t arr[], int l, int h) {
       swap(&arr[i], &arr[j]);
     }
   }
-  printf("Swapping arr[i + 1] %d and arr[j] %d\n", arr[i + 1], arr[h]);
+  printf("Swapping arr[i + 1] %d and arr[j] %d (pivot)\n", arr[i + 1], arr[h]);
   swap(&arr[i + 1], &arr[h]);
   return (i + 1);
 }
@@ -44,7 +44,7 @@ void quickSortIterative(data_t arr[], int l, int h) {
 
   // push initial values of l and h to stack
   stack[ ++top ] = l;
-  stack[ ++top ] = h;
+  stack[ ++top ] = h - 1;
 
   // Keep popping from stack while is not empty
   while (top >= 0) {

@@ -47,20 +47,20 @@ static void merge_a(data_t* A, int p, int q, int r) {
   int n1 = q - p + 1;
   int n2 = r - q;
 
-  #ifdef DEBUG
-  printf("p: %d, q: %d, r: %d, n1: %d, n2: %d\n", p, q, r, n1, n2);
-  for (int iA = p; iA < r; iA++) {
-    if (iA == p || iA == q)
-        printf("|");
-    else
-    {
-        printf(" ");
-    }
-        
-    printf("%d", A[iA]);
-  }
-  printf("|\n");
-  #endif
+  // #ifdef DEBUG
+  // printf("p: %d, q: %d, r: %d, n1: %d, n2: %d\n", p, q, r, n1, n2);
+  // for (int iA = p; iA < r; iA++) {
+  //   if (iA == p || iA == q)
+  //       printf("|");
+  //   else
+  //   {
+  //       printf(" ");
+  //   }
+  //       
+  //   printf("%d", A[iA]);
+  // }
+  // printf("|\n");
+  // #endif
 
   // Create two temporary arrays
   data_t* left = 0, * right = 0;
@@ -78,19 +78,19 @@ static void merge_a(data_t* A, int p, int q, int r) {
   left[n1] = UINT_MAX;
   right[n2] = UINT_MAX;
 
-  #ifdef DEBUG
-  printf("Left: \n");
-  for (int iL = 0; iL <= n1; iL++) {
-      printf("%u ", left[iL]);
-  }
-  printf("\n");
+  // #ifdef DEBUG
+  // printf("Left: \n");
+  // for (int iL = 0; iL <= n1; iL++) {
+  //     printf("%u ", left[iL]);
+  // }
+  // printf("\n");
 
-  printf("Right: \n");
-  for (int iR = 0; iR <= n2; iR++) {
-      printf("%u ", right[iR]);
-  }
-  printf("\n");
-  #endif
+  // printf("Right: \n");
+  // for (int iR = 0; iR <= n2; iR++) {
+  //     printf("%u ", right[iR]);
+  // }
+  // printf("\n");
+  // #endif
 
   // Value comparison and reordering
   int i = 0;

@@ -7,6 +7,7 @@
 /* Typedefs */
 
 typedef uint32_t data_t;
+const int MAX_VALUE = 100;
 
 extern void quickSortIterative(data_t arr[], int l, int h);
 
@@ -45,12 +46,11 @@ int main(int argc, char* argv[]) {
 
   int i, j;
   for (j = 0; j < K ; j++) {
-    //for (i = 0; i < N; i++) {
-    //  data[i] = rand_r(&seed);
-    //  printf("%d ", data[i]);
-    //}
-    //printf("\n");
-    data = (data_t[]) {4, 5, 2, 3, 4, 6, 2, 3, 4, 1};
+    for (i = 0; i < N; i++) {
+      data[i] = rand_r(&seed) % (MAX_VALUE + 1);
+      printf("%d ", data[i]);
+    }
+    printf("\n");
 
     //isort(data, data + N - 1);
     quickSortIterative(data, 0, N);

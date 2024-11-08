@@ -1,0 +1,106 @@
+DEBUG=1
+
+Running test #0...
+Generating random array of 1000000 elements
+Arrays are sorted: yes
+ --> test_correctness at line 217: PASS
+sort_a          : Elapsed execution time: 5.705585 sec
+sort_a repeated : Elapsed execution time: 5.670922 sec
+Generating inverted array of 1000000 elements
+Arrays are sorted: yes
+ --> test_correctness at line 217: PASS
+sort_a          : Elapsed execution time: 11.196593 sec
+sort_a repeated : Elapsed execution time: 11.077981 sec
+
+Running test #1...
+ --> test_zero_element at line 245: PASS
+
+Running test #2...
+ --> test_one_element at line 266: PASS
+Done testing.
+==38560==
+==38560== I refs:        5,164,640,123
+==38560== I1  misses:            1,702
+==38560== LLi misses:            1,685
+==38560== I1  miss rate:          0.00%
+==38560== LLi miss rate:          0.00%
+==38560==
+==38560== D refs:        3,437,651,618  (2,600,190,092 rd   + 837,461,526 wr)
+==38560== D1  misses:        9,196,887  (    4,760,167 rd   +   4,436,720 wr)
+==38560== LLd misses:          677,033  (      269,108 rd   +     407,925 wr)
+==38560== D1  miss rate:           0.3% (          0.2%     +         0.5%  )
+==38560== LLd miss rate:           0.0% (          0.0%     +         0.0%  )
+==38560==
+==38560== LL refs:           9,198,589  (    4,761,869 rd   +   4,436,720 wr)
+==38560== LL misses:           678,718  (      270,793 rd   +     407,925 wr)
+==38560== LL miss rate:            0.0% (          0.0%     +         0.0%  )
+==38560==
+==38560== Branches:        498,056,492  (  481,055,786 cond +  17,000,706 ind)
+==38560== Mispredicts:      40,192,959  (   40,192,660 cond +         299 ind)
+==38560== Mispred rate:            8.1% (          8.4%     +         0.0%   )
+
+ Performance counter stats for './sort 1000000 1':
+
+     2,380,275,133      cycles
+     5,194,965,984      instructions              #    2.18  insn per cycle
+        20,530,817      branch-misses
+
+       0.677629313 seconds time elapsed
+
+       0.664959000 seconds user
+       0.011945000 seconds sys
+
+--------------------------------------------------------------------------------
+
+DEBUG=0
+
+Running test #0...
+Generating random array of 1000000 elements
+Arrays are sorted: yes
+ --> test_correctness at line 217: PASS
+sort_a          : Elapsed execution time: 2.738644 sec
+sort_a repeated : Elapsed execution time: 2.681572 sec
+Generating inverted array of 1000000 elements
+Arrays are sorted: yes
+ --> test_correctness at line 217: PASS
+sort_a          : Elapsed execution time: 5.347583 sec
+sort_a repeated : Elapsed execution time: 5.280096 sec
+
+Running test #1...
+ --> test_zero_element at line 245: PASS
+
+Running test #2...
+ --> test_one_element at line 266: PASS
+Done testing.
+==38873==
+==38873== I refs:        2,907,088,194
+==38873== I1  misses:            1,697
+==38873== LLi misses:            1,683
+==38873== I1  miss rate:          0.00%
+==38873== LLi miss rate:          0.00%
+==38873==
+==38873== D refs:        1,022,069,851  (618,719,845 rd   + 403,350,006 wr)
+==38873== D1  misses:        9,202,559  (  4,760,853 rd   +   4,441,706 wr)
+==38873== LLd misses:          677,494  (    269,353 rd   +     408,141 wr)
+==38873== D1  miss rate:           0.9% (        0.8%     +         1.1%  )
+==38873== LLd miss rate:           0.1% (        0.0%     +         0.1%  )
+==38873==
+==38873== LL refs:           9,204,256  (  4,762,550 rd   +   4,441,706 wr)
+==38873== LL misses:           679,177  (    271,036 rd   +     408,141 wr)
+==38873== LL miss rate:            0.0% (        0.0%     +         0.1%  )
+==38873==
+==38873== Branches:        307,415,245  (290,414,554 cond +  17,000,691 ind)
+==38873== Mispredicts:      10,678,810  ( 10,678,510 cond +         300 ind)
+==38873== Mispred rate:            3.5% (        3.7%     +         0.0%   )
+
+ Performance counter stats for './sort 1000000 1':
+
+     1,150,804,049      cycles
+     2,937,325,513      instructions              #    2.55  insn per cycle
+           342,140      branch-misses
+
+       0.324941849 seconds time elapsed
+
+       0.320935000 seconds user
+       0.004011000 seconds sys
+
